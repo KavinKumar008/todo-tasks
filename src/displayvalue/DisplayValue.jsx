@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaRegCircle } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
@@ -12,25 +12,35 @@ const DisplayValue = ({
   changeIcon,
   displayTasks,
 }) => {
-  console.log(ind);
+  const [clickLogo, setClickLogo] = useState(displayTasks);
+  console.log(clickLogo);
   function handleDelete(index) {
     deleteValue(index);
   }
   return (
     <main key={ind} className="text-white flex justify-center">
       <div className="w-[600px]">
-        <div className="flex items-center bg-[rgb(22,37,54)] border-b border-black p-4">
-          {displayTasks && displayIcon ? (
+        <div className="flex items-center bg-white shadow-2xl border-b border-black p-4 dark:bg-[rgb(22,37,54)]">
+          {displayIcon ? (
             <IoCheckmarkDoneCircleOutline
               className="text-white text-4xl"
-              onClick={changeIcon}
+              onClick={() =>
+                setClickLogo(clickLogo.filter((_, index) => index === ind))
+              }
             />
           ) : (
-            <FaRegCircle className="text-white text-4xl" onClick={changeIcon} />
+            <FaRegCircle
+              className="text-black text-4xl dark:text-white"
+              onClick={() =>
+                setClickLogo(clickLogo.filter((_, index) => index === ind))
+              }
+            />
           )}
-          <h1 className="w-full text-md outline-none ml-4">{item.data}</h1>
+          <h1 className="w-full text-md text-black outline-none ml-4 dark:bg-[rgb(22,37,54)] dark:text-white">
+            {item.data}
+          </h1>
           <IoClose
-            className="text-white bg-[rgb(22,37,54)] text-4xl mr-2"
+            className="text-black bg-white text-4xl mr-2 dark:bg-[rgb(22,37,54)] dark:text-white"
             onClick={() => handleDelete(ind)}
           />
         </div>

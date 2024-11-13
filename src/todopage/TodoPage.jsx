@@ -5,11 +5,12 @@ import mountain from "../assets/mountain.jpg";
 import DisplayValue from "../displayvalue/DisplayValue";
 import { CiDark } from "react-icons/ci";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
+import pillar from "../assets/pillar.jpg";
 
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [displayTasks, setDisplayTasks] = useState([]);
-  const [theme, setTheme] = useState(true);
+  const [theme, setTheme] = useState(false);
   const [footerDisplay, setFooterDisplay] = useState(false);
   const [displayIcon, setDisplayIcon] = useState(false);
 
@@ -34,8 +35,8 @@ const TodoPage = () => {
     setDisplayTasks(displayTasks.filter((_, ind) => ind !== index));
   }
 
-  const themeChanging = () => {
-    setTheme(false);
+  const toogleTheme = () => {
+    setTheme(!theme);
   };
 
   const allDataDelete = () => {
@@ -48,79 +49,102 @@ const TodoPage = () => {
   };
 
   return (
-    <main className="h-screen ">
-      <section
-        style={{ backgroundImage: `url(${mountain})` }}
-        className="w-full h-1/2 bg-no-repeat flex justify-center items-center "
+    <div className={`${theme && "dark"}`}>
+      <main
+        className="h-screen w-full"
+        style={
+          theme
+            ? { backgroundColor: "black" }
+            : { backgroundColor: "rgb(223, 227, 232)" }
+        }
       >
-        <div className="w-[600px]">
-          <div className="flex justify-between">
-            <h1 className="text-5xl text-white">T O D O</h1>
-            <CiLight className="text-white text-4xl" onClick={themeChanging} />
-          </div>
-          <div className="mt-10 flex items-center bg-[rgb(22,37,54)]  rounded-md">
-            {displayIcon ? (
-              <IoCheckmarkDoneCircleOutline
-                className="text-orange-500 text-4xl mx-4 font-extrabold"
-                onClick={changeIcon}
-              />
-            ) : (
-              <FaRegCircle
-                className="text-white text-3xl mx-4 font-extrabold"
-                onClick={changeIcon}
-              />
-            )}
-            <input
-              type="text"
-              placeholder="todo"
-              className="w-full p-3 bg-[rgb(22,37,54)] text-gray-500 outline-none "
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress}
-            />
-            <button
-              type="button"
-              className="text-white mx-2"
-              onClick={() => handleSubmit()}
-              disabled={inputValue === ""}
-            >
-              Enter
-            </button>
-          </div>
-        </div>
-      </section>
-      {displayTasks &&
-        displayTasks.map((item, ind) => (
-          <div key={ind}>
-            <DisplayValue
-              item={item}
-              displayTasks={displayTasks}
-              ind={ind}
-              deleteValue={deleteValue}
-              displayIcon={displayIcon}
-              setDisplayIcon={setDisplayIcon}
-              changeIcon={changeIcon}
-            />
-          </div>
-        ))}
-      {footerDisplay ? (
-        <div className="flex justify-center items-center">
-          <div className="w-[600px] flex justify-between bg-[rgb(22,37,54)] p-4 border-t border-black text-white">
-            <p className="text-gray-500">{displayTasks.length} items left</p>
-            <div className="flex gap-4">
-              <p className="cursor-pointer text-gray-500">All</p>
-              <p className="cursor-pointer text-gray-500">Active</p>
-              <p className="cursor-pointer text-gray-500"> Completed</p>
+        <section
+          style={
+            theme
+              ? { backgroundImage: `url(${mountain})` }
+              : { backgroundImage: `url(${pillar})` }
+          }
+          className="w-full h-1/2 bg-no-repeat flex justify-center items-center"
+        >
+          <div className="w-[600px]">
+            <div className="flex justify-between">
+              <h1 className="text-5xl text-white">T O D O</h1>
+              {theme ? (
+                <CiLight
+                  className="text-white text-4xl"
+                  onClick={toogleTheme}
+                />
+              ) : (
+                <CiDark className="text-white text-4xl" onClick={toogleTheme} />
+              )}
             </div>
-            <p className="cursor-pointer text-gray-500" onClick={allDataDelete}>
-              Clear Completely
-            </p>
+            <div className="mt-10 flex items-center bg-white  rounded-md dark:bg-[rgb(22,37,54)]">
+              {displayIcon ? (
+                <IoCheckmarkDoneCircleOutline
+                  className="text-orange-500 text-4xl mx-4 font-extrabold"
+                  onClick={changeIcon}
+                />
+              ) : (
+                <FaRegCircle
+                  className="text-black text-3xl mx-4 font-extrabold dark:text-white dark:bg-[rgb(22,37,54)]"
+                  onClick={changeIcon}
+                />
+              )}
+              <input
+                type="text"
+                placeholder="todo"
+                className="w-full p-3 bg-white text-gray-500 outline-none dark:bg-[rgb(22,37,54)]"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={handleKeyPress}
+              />
+              <button
+                type="button"
+                className="text-black mx-2 dark:bg-[rgb(22,37,54)] dark:text-white"
+                onClick={() => handleSubmit()}
+                disabled={inputValue === ""}
+              >
+                Enter
+              </button>
+            </div>
           </div>
-        </div>
-      ) : (
-        <span>null</span>
-      )}
-    </main>
+        </section>
+        {displayTasks &&
+          displayTasks.map((item, ind) => (
+            <div key={ind}>
+              <DisplayValue
+                item={item}
+                displayTasks={displayTasks}
+                ind={ind}
+                deleteValue={deleteValue}
+                displayIcon={displayIcon}
+                setDisplayIcon={setDisplayIcon}
+                changeIcon={changeIcon}
+              />
+            </div>
+          ))}
+        {footerDisplay ? (
+          <div className="flex justify-center items-center">
+            <div className="w-[600px] flex justify-between bg-white shadow-2xl p-4 border-t border-black text-white dark:bg-[rgb(22,37,54)]">
+              <p className="text-gray-500">{displayTasks.length} items left</p>
+              <div className="flex gap-4">
+                <p className="cursor-pointer text-gray-500">All</p>
+                <p className="cursor-pointer text-gray-500">Active</p>
+                <p className="cursor-pointer text-gray-500"> Completed</p>
+              </div>
+              <p
+                className="cursor-pointer text-gray-500"
+                onClick={allDataDelete}
+              >
+                Clear Completely
+              </p>
+            </div>
+          </div>
+        ) : (
+          <span>{""}</span>
+        )}
+      </main>
+    </div>
   );
 };
 
