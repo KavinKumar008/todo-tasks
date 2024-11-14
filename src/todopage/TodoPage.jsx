@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { CiLight } from "react-icons/ci";
 import { FaRegCircle } from "react-icons/fa";
 import mountain from "../assets/mountain.jpg";
@@ -6,6 +6,7 @@ import DisplayValue from "../displayvalue/DisplayValue";
 import { CiDark } from "react-icons/ci";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import pillar from "../assets/pillar.jpg";
+import { IoClose } from "react-icons/io5";
 
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState("");
@@ -13,10 +14,19 @@ const TodoPage = () => {
   const [theme, setTheme] = useState(false);
   const [footerDisplay, setFooterDisplay] = useState(false);
   const [displayIcon, setDisplayIcon] = useState(false);
+  const [displayButtons, setDisplayButtons] = useState(false);
+
+  const idRef = useRef(0);
 
   // console.log(displayIcon);
+
   const handleSubmit = () => {
-    setDisplayTasks((prevValues) => [...prevValues, { data: inputValue }]);
+    const newIdDoc = idRef.current + 1;
+    idRef.current = newIdDoc;
+    setDisplayTasks((prevValues) => [
+      ...prevValues,
+      { id: newIdDoc, data: inputValue },
+    ]);
     setFooterDisplay(true);
     setInputValue("");
   };
@@ -40,12 +50,16 @@ const TodoPage = () => {
   };
 
   const allDataDelete = () => {
-    setDisplayTasks("");
+    setDisplayTasks([]);
     setFooterDisplay(false);
   };
 
   const changeIcon = () => {
     setDisplayIcon(!displayIcon);
+  };
+
+  const handleSelect = () => {
+    setDisplayButtons(!displayButtons);
   };
 
   return (
@@ -100,8 +114,8 @@ const TodoPage = () => {
               />
               <button
                 type="button"
-                className="text-black mx-2 dark:bg-[rgb(22,37,54)] dark:text-white"
-                onClick={() => handleSubmit()}
+                className="text-black mx-2 dark:bg-[rgb(22,37,54)] dark:text-white cursor-pointer"
+                onClick={handleSubmit}
                 disabled={inputValue === ""}
               >
                 Enter
@@ -125,12 +139,27 @@ const TodoPage = () => {
           ))}
         {footerDisplay ? (
           <div className="flex justify-center items-center">
-            <div className="w-[600px] flex justify-between bg-white shadow-2xl p-4 border-t border-black text-white dark:bg-[rgb(22,37,54)]">
+            <div className="w-[600px] flex justify-between bg-white shadow-2xl p-4 border-t border-gray-400 text-white dark:bg-[rgb(22,37,54)]  dark:border-black">
               <p className="text-gray-500">{displayTasks.length} items left</p>
               <div className="flex gap-4">
-                <p className="cursor-pointer text-gray-500">All</p>
-                <p className="cursor-pointer text-gray-500">Active</p>
-                <p className="cursor-pointer text-gray-500"> Completed</p>
+                <p
+                  className="cursor-pointer text-gray-500"
+                  onClick={handleSelect}
+                >
+                  All
+                </p>
+                <p
+                  className="cursor-pointer text-gray-500"
+                  onClick={handleSelect}
+                >
+                  Active
+                </p>
+                <p
+                  className="cursor-pointer text-gray-500"
+                  onClick={handleSelect}
+                >
+                  Completed
+                </p>
               </div>
               <p
                 className="cursor-pointer text-gray-500"

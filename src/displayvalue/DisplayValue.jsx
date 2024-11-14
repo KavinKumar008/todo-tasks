@@ -11,32 +11,42 @@ const DisplayValue = ({
   setDisplayIcon,
   changeIcon,
   displayTasks,
+  handleSubmit,
 }) => {
   const [clickLogo, setClickLogo] = useState(displayTasks);
-  console.log(clickLogo);
+  // console.log(clickLogo);
   function handleDelete(index) {
     deleteValue(index);
   }
+
+  const handleClickIcon = (index) => {
+    // console.log(index);
+    // handleSubmit(index);
+    setClickLogo(clickLogo.filter((item, ind) => item.id === index));
+    // setClickLogo(
+    //   clickLogo
+    //     .filter((value, i) => console.log(value, i))
+    //     .map((item, ind) => item[ind] === index)
+    // );
+
+    // changeIcon();
+  };
   return (
     <main key={ind} className="text-white flex justify-center">
       <div className="w-[600px]">
-        <div className="flex items-center bg-white shadow-2xl border-b border-black p-4 dark:bg-[rgb(22,37,54)]">
+        <div className="flex items-center bg-white shadow-2xl border-b border-gray-300 p-4 dark:bg-[rgb(22,37,54)] dark:border-black">
           {displayIcon ? (
             <IoCheckmarkDoneCircleOutline
               className="text-white text-4xl"
-              onClick={() =>
-                setClickLogo(clickLogo.filter((_, index) => index === ind))
-              }
+              onClick={() => handleClickIcon(ind)}
             />
           ) : (
             <FaRegCircle
               className="text-black text-4xl dark:text-white"
-              onClick={() =>
-                setClickLogo(clickLogo.filter((_, index) => index === ind))
-              }
+              onClick={() => handleClickIcon(ind)}
             />
           )}
-          <h1 className="w-full text-md text-black outline-none ml-4 dark:bg-[rgb(22,37,54)] dark:text-white">
+          <h1 className="w-full text-md text-black outline-none ml-4  dark:bg-[rgb(22,37,54)] dark:text-white">
             {item.data}
           </h1>
           <IoClose
