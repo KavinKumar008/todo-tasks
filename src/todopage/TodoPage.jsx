@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { CiLight } from "react-icons/ci";
 import { FaRegCircle } from "react-icons/fa";
 import mountain from "../assets/mountain.jpg";
@@ -25,7 +25,7 @@ const TodoPage = () => {
     idRef.current = newIdDoc;
     setDisplayTasks((prevValues) => [
       ...prevValues,
-      { id: newIdDoc, data: inputValue },
+      { id: newIdDoc, data: inputValue, isCompleted: false },
     ]);
     setFooterDisplay(true);
     setInputValue("");
@@ -58,8 +58,11 @@ const TodoPage = () => {
     setDisplayIcon(!displayIcon);
   };
 
-  const handleSelect = () => {
+  const handleSelect = (item) => {
     setDisplayButtons(!displayButtons);
+    // if (displayTasks.length === item.length) {
+    //   alert("hiii");
+    // }
   };
 
   return (
@@ -128,12 +131,15 @@ const TodoPage = () => {
             <div key={ind}>
               <DisplayValue
                 item={item}
+                handleSubmit={handleSubmit}
                 displayTasks={displayTasks}
+                setDisplayTasks={setDisplayTasks}
                 ind={ind}
                 deleteValue={deleteValue}
                 displayIcon={displayIcon}
                 setDisplayIcon={setDisplayIcon}
                 changeIcon={changeIcon}
+                handleSelect={handleSelect}
               />
             </div>
           ))}

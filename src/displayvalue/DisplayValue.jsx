@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegCircle } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
@@ -11,42 +11,46 @@ const DisplayValue = ({
   setDisplayIcon,
   changeIcon,
   displayTasks,
+  setDisplayTasks,
   handleSubmit,
+  handleSelect,
 }) => {
-  const [clickLogo, setClickLogo] = useState(displayTasks);
-  // console.log(clickLogo);
+  const [hide, setHide] = useState(false);
+  const [strikeThrough, setStrikeThrough] = useState(false);
   function handleDelete(index) {
     deleteValue(index);
   }
 
-  const handleClickIcon = (index) => {
-    // console.log(index);
-    // handleSubmit(index);
-    setClickLogo(clickLogo.filter((item, ind) => item.id === index));
-    // setClickLogo(
-    //   clickLogo
-    //     .filter((value, i) => console.log(value, i))
-    //     .map((item, ind) => item[ind] === index)
-    // );
-
-    // changeIcon();
+  const handleClickIcon = (item) => {
+    setHide(!hide);
+    setStrikeThrough(!strikeThrough);
+    hide ? (item.isCompleted = false) : (item.isCompleted = true);
+    // setDisplayIcon(false);
+    handleSelect(item);
   };
+
+  console.log(displayTasks);
   return (
     <main key={ind} className="text-white flex justify-center">
       <div className="w-[600px]">
         <div className="flex items-center bg-white shadow-2xl border-b border-gray-300 p-4 dark:bg-[rgb(22,37,54)] dark:border-black">
-          {displayIcon ? (
+          {item.isCompleted ? (
             <IoCheckmarkDoneCircleOutline
-              className="text-white text-4xl"
-              onClick={() => handleClickIcon(ind)}
+              className="text-green-600 text-4xl "
+              onClick={() => handleClickIcon(item)}
             />
           ) : (
             <FaRegCircle
               className="text-black text-4xl dark:text-white"
-              onClick={() => handleClickIcon(ind)}
+              onClick={() => handleClickIcon(item)}
             />
           )}
-          <h1 className="w-full text-md text-black outline-none ml-4  dark:bg-[rgb(22,37,54)] dark:text-white">
+          {/* <IoCheckmarkDoneCircleOutline className="text-blue-600 text-3xl" /> */}
+          <h1
+            className="w-full text-md text-black outline-none ml-4  dark:bg-[rgb(22,37,54)] dark:text-white"
+            // style={strikeThrough ? { textDecoration: "line-through" } : null}
+            style={{ textDecoration: strikeThrough ? "line-through" : "none" }}
+          >
             {item.data}
           </h1>
           <IoClose
