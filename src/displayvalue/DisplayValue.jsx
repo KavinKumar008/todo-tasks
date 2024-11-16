@@ -49,7 +49,10 @@ const DisplayValue = ({
           <h1
             className="w-full text-md text-black outline-none ml-4  dark:bg-[rgb(22,37,54)] dark:text-white"
             // style={strikeThrough ? { textDecoration: "line-through" } : null}
-            style={{ textDecoration: strikeThrough ? "line-through" : "none" }}
+            style={{
+              textDecoration: strikeThrough ? "line-through" : "none",
+              color: strikeThrough ? "grey" : "black",
+            }}
           >
             {item.data}
           </h1>

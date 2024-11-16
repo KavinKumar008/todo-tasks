@@ -18,7 +18,7 @@ const TodoPage = () => {
 
   const idRef = useRef(0);
 
-  // console.log(displayIcon);
+  // console.log(displayTasks[0].isCompleted);
 
   const handleSubmit = () => {
     const newIdDoc = idRef.current + 1;
@@ -31,7 +31,7 @@ const TodoPage = () => {
     setInputValue("");
   };
 
-  // console.log(displayTasks);
+  console.log(displayTasks);
 
   const handleKeyPress = (event) => {
     // look for the Enter keyCode
@@ -58,11 +58,12 @@ const TodoPage = () => {
     setDisplayIcon(!displayIcon);
   };
 
-  const handleSelect = (item) => {
+  const handleSelect = () => {
     setDisplayButtons(!displayButtons);
-    // if (displayTasks.length === item.length) {
-    //   alert("hiii");
-    // }
+  };
+
+  const handleActive = () => {
+    displayTasks.filter((item) => item.isCompleted === true);
   };
 
   return (
@@ -146,29 +147,35 @@ const TodoPage = () => {
         {footerDisplay ? (
           <div className="flex justify-center items-center">
             <div className="w-[600px] flex justify-between bg-white shadow-2xl p-4 border-t border-gray-400 text-white dark:bg-[rgb(22,37,54)]  dark:border-black">
-              <p className="text-gray-500">{displayTasks.length} items left</p>
+              <p className="text-gray-500 font-medium">
+                {displayTasks
+                  ? displayTasks.filter((item) => item.isCompleted === false)
+                      .length
+                  : displayTasks.length}{" "}
+                items left
+              </p>
               <div className="flex gap-4">
                 <p
-                  className="cursor-pointer text-gray-500"
+                  className="cursor-pointer text-blue-200 font-medium"
                   onClick={handleSelect}
                 >
                   All
                 </p>
                 <p
-                  className="cursor-pointer text-gray-500"
-                  onClick={handleSelect}
+                  className="cursor-pointer text-gray-500 font-medium"
+                  onClick={handleActive}
                 >
                   Active
                 </p>
                 <p
-                  className="cursor-pointer text-gray-500"
-                  onClick={handleSelect}
+                  className="cursor-pointer text-gray-500 font-medium"
+                  // onClick={handleSelect}
                 >
                   Completed
                 </p>
               </div>
               <p
-                className="cursor-pointer text-gray-500"
+                className="cursor-pointer text-gray-500 font-medium"
                 onClick={allDataDelete}
               >
                 Clear Completely
