@@ -15,6 +15,8 @@ const TodoPage = () => {
   const [footerDisplay, setFooterDisplay] = useState(false);
   const [displayIcon, setDisplayIcon] = useState(false);
   const [displayButtons, setDisplayButtons] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+  const [textColor, setTextColor] = useState("black");
 
   const idRef = useRef(0);
 
@@ -30,8 +32,6 @@ const TodoPage = () => {
     setFooterDisplay(true);
     setInputValue("");
   };
-
-  console.log(displayTasks);
 
   const handleKeyPress = (event) => {
     // look for the Enter keyCode
@@ -58,12 +58,32 @@ const TodoPage = () => {
     setDisplayIcon(!displayIcon);
   };
 
-  const handleSelect = () => {
+  const handleAll = () => {
     setDisplayButtons(!displayButtons);
+    const allData = displayTasks.filter(
+      (item) => item.isCompleted === true || item.isCompleted === false
+    );
+    setTextColor(textColor === "black" ? "green" : "black");
+    setFilteredData(allData);
   };
 
   const handleActive = () => {
-    displayTasks.filter((item) => item.isCompleted === true);
+    const activeTasks = displayTasks.filter(
+      (item) => item.isCompleted === false
+    );
+    setFilteredData(activeTasks);
+  };
+
+  useEffect(() => {
+    setFilteredData(displayTasks);
+  }, [displayTasks]);
+  console.log(filteredData);
+
+  const handleCompleted = () => {
+    const completedTasks = displayTasks.filter(
+      (item) => item.isCompleted === true
+    );
+    setFilteredData(completedTasks);
   };
 
   return (
@@ -127,37 +147,31 @@ const TodoPage = () => {
             </div>
           </div>
         </section>
-        {displayTasks &&
-          displayTasks.map((item, ind) => (
-            <div key={ind}>
-              <DisplayValue
-                item={item}
-                handleSubmit={handleSubmit}
-                displayTasks={displayTasks}
-                setDisplayTasks={setDisplayTasks}
-                ind={ind}
-                deleteValue={deleteValue}
-                displayIcon={displayIcon}
-                setDisplayIcon={setDisplayIcon}
-                changeIcon={changeIcon}
-                handleSelect={handleSelect}
-              />
-            </div>
-          ))}
+        {filteredData.map((item, ind) => (
+          <div key={ind}>
+            <DisplayValue
+              item={item}
+              setDisplayTasks={setDisplayTasks}
+              ind={ind}
+              deleteValue={deleteValue}
+              handleAll={handleAll}
+            />
+          </div>
+        ))}
         {footerDisplay ? (
           <div className="flex justify-center items-center">
             <div className="w-[600px] flex justify-between bg-white shadow-2xl p-4 border-t border-gray-400 text-white dark:bg-[rgb(22,37,54)]  dark:border-black">
               <p className="text-gray-500 font-medium">
-                {displayTasks
-                  ? displayTasks.filter((item) => item.isCompleted === false)
-                      .length
-                  : displayTasks.length}{" "}
+                {
+                  displayTasks.filter((item) => item.isCompleted === false)
+                    .length
+                }{" "}
                 items left
               </p>
               <div className="flex gap-4">
                 <p
-                  className="cursor-pointer text-blue-200 font-medium"
-                  onClick={handleSelect}
+                  className={`cursor-pointer ${textColor} font-medium`}
+                  onClick={handleAll}
                 >
                   All
                 </p>
@@ -169,7 +183,7 @@ const TodoPage = () => {
                 </p>
                 <p
                   className="cursor-pointer text-gray-500 font-medium"
-                  // onClick={handleSelect}
+                  onClick={handleCompleted}
                 >
                   Completed
                 </p>

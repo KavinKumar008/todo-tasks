@@ -3,18 +3,7 @@ import { FaRegCircle } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 
-const DisplayValue = ({
-  item,
-  ind,
-  deleteValue,
-  displayIcon,
-  setDisplayIcon,
-  changeIcon,
-  displayTasks,
-  setDisplayTasks,
-  handleSubmit,
-  handleSelect,
-}) => {
+const DisplayValue = ({ item, ind, deleteValue, handleAll, handleActive }) => {
   const [hide, setHide] = useState(false);
   const [strikeThrough, setStrikeThrough] = useState(false);
   function handleDelete(index) {
@@ -22,14 +11,15 @@ const DisplayValue = ({
   }
 
   const handleClickIcon = (item) => {
-    setHide(!hide);
     setStrikeThrough(!strikeThrough);
+    setHide(!hide);
     hide ? (item.isCompleted = false) : (item.isCompleted = true);
     // setDisplayIcon(false);
-    handleSelect(item);
+    handleAll(item);
   };
+  console.log(strikeThrough);
 
-  console.log(displayTasks);
+  // console.log(displayTasks);
   return (
     <main key={ind} className="text-white flex justify-center">
       <div className="w-[600px]">
