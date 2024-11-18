@@ -16,7 +16,7 @@ const TodoPage = () => {
   const [displayIcon, setDisplayIcon] = useState(false);
   const [displayButtons, setDisplayButtons] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
-  const [textColor, setTextColor] = useState("black");
+  const [textColor, setTextColor] = useState("all");
 
   const idRef = useRef(0);
 
@@ -59,15 +59,16 @@ const TodoPage = () => {
   };
 
   const handleAll = () => {
+    setTextColor("all");
     setDisplayButtons(!displayButtons);
     const allData = displayTasks.filter(
       (item) => item.isCompleted === true || item.isCompleted === false
     );
-    setTextColor(textColor === "black" ? "green" : "black");
     setFilteredData(allData);
   };
 
   const handleActive = () => {
+    setTextColor("active");
     const activeTasks = displayTasks.filter(
       (item) => item.isCompleted === false
     );
@@ -80,6 +81,7 @@ const TodoPage = () => {
   console.log(filteredData);
 
   const handleCompleted = () => {
+    setTextColor("completed");
     const completedTasks = displayTasks.filter(
       (item) => item.isCompleted === true
     );
@@ -170,19 +172,30 @@ const TodoPage = () => {
               </p>
               <div className="flex gap-4">
                 <p
-                  className={`cursor-pointer ${textColor} font-medium`}
+                  className={`cursor-pointer ${
+                    textColor === "all" ? "text-blue-200" : "text-gray-500"
+                  }  font-medium`}
+                  style={{ color: textColor }}
                   onClick={handleAll}
                 >
                   All
                 </p>
                 <p
-                  className="cursor-pointer text-gray-500 font-medium"
+                  className={`cursor-pointer  ${
+                    textColor === "active" ? "text-blue-200" : "text-gray-500"
+                  }    font-medium`}
+                  style={{ color: textColor }}
                   onClick={handleActive}
                 >
                   Active
                 </p>
                 <p
-                  className="cursor-pointer text-gray-500 font-medium"
+                  className={`cursor-pointer  ${
+                    textColor === "completed"
+                      ? "text-blue-200"
+                      : "text-gray-500"
+                  }    font-medium`}
+                  style={{ color: textColor }}
                   onClick={handleCompleted}
                 >
                   Completed
