@@ -1,25 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaRegCircle } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 
 const DisplayValue = ({ item, ind, deleteValue, handleAll, handleActive }) => {
   const [hide, setHide] = useState(false);
-  const [strikeThrough, setStrikeThrough] = useState(false);
+
   function handleDelete(index) {
     deleteValue(index);
   }
 
   const handleClickIcon = (item) => {
-    setStrikeThrough(!strikeThrough);
     setHide(!hide);
     hide ? (item.isCompleted = false) : (item.isCompleted = true);
-    // setDisplayIcon(false);
     handleAll(item);
   };
-  console.log(strikeThrough);
+  console.log(item);
 
-  // console.log(displayTasks);
   return (
     <main key={ind} className="text-white flex justify-center">
       <div className="w-[600px]">
@@ -38,10 +35,9 @@ const DisplayValue = ({ item, ind, deleteValue, handleAll, handleActive }) => {
           {/* <IoCheckmarkDoneCircleOutline className="text-blue-600 text-3xl" /> */}
           <h1
             className="w-full text-md text-black outline-none ml-4  dark:bg-[rgb(22,37,54)] dark:text-white"
-            // style={strikeThrough ? { textDecoration: "line-through" } : null}
             style={{
-              textDecoration: strikeThrough ? "line-through" : "none",
-              color: strikeThrough ? "grey" : "black",
+              textDecoration: item.isCompleted ? "line-through" : "none",
+              color: item.isCompleted ? "grey" : "none",
             }}
           >
             {item.data}

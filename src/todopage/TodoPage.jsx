@@ -14,7 +14,7 @@ const TodoPage = () => {
   const [theme, setTheme] = useState(false);
   const [footerDisplay, setFooterDisplay] = useState(false);
   const [displayIcon, setDisplayIcon] = useState(false);
-  const [displayButtons, setDisplayButtons] = useState(false);
+  // const [displayButtons, setDisplayButtons] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [textColor, setTextColor] = useState("all");
 
@@ -60,7 +60,7 @@ const TodoPage = () => {
 
   const handleAll = () => {
     setTextColor("all");
-    setDisplayButtons(!displayButtons);
+    // setDisplayButtons(!displayButtons);
     const allData = displayTasks.filter(
       (item) => item.isCompleted === true || item.isCompleted === false
     );
@@ -91,18 +91,20 @@ const TodoPage = () => {
   return (
     <div className={`${theme && "dark"}`}>
       <main
-        className="h-screen w-full"
+        className="h-screen w-full "
         style={
           theme
             ? { backgroundColor: "black" }
-            : { backgroundColor: "rgb(223, 227, 232)" }
+            : {
+                backgroundColor: "rgb(223, 227, 232)",
+              }
         }
       >
         <section
           style={
             theme
-              ? { backgroundImage: `url(${mountain})` }
-              : { backgroundImage: `url(${pillar})` }
+              ? { backgroundImage: `url(${mountain})`, padding: "5rem" }
+              : { backgroundImage: `url(${pillar})`, padding: "5rem" }
           }
           className="w-full h-1/2 bg-no-repeat flex justify-center items-center"
         >
@@ -175,7 +177,6 @@ const TodoPage = () => {
                   className={`cursor-pointer ${
                     textColor === "all" ? "text-blue-200" : "text-gray-500"
                   }  font-medium`}
-                  style={{ color: textColor }}
                   onClick={handleAll}
                 >
                   All
@@ -184,7 +185,6 @@ const TodoPage = () => {
                   className={`cursor-pointer  ${
                     textColor === "active" ? "text-blue-200" : "text-gray-500"
                   }    font-medium`}
-                  style={{ color: textColor }}
                   onClick={handleActive}
                 >
                   Active
@@ -195,7 +195,6 @@ const TodoPage = () => {
                       ? "text-blue-200"
                       : "text-gray-500"
                   }    font-medium`}
-                  style={{ color: textColor }}
                   onClick={handleCompleted}
                 >
                   Completed
