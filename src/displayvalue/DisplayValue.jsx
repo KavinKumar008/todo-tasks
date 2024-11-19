@@ -18,7 +18,10 @@ const DisplayValue = ({ item, ind, deleteValue, handleAll, handleActive }) => {
   console.log(item);
 
   return (
-    <main key={ind} className="text-white flex justify-center">
+    <main
+      key={ind}
+      className="text-white flex justify-center bg-[rgb(223,227,232)] dark:bg-black max-[600px]:px-2"
+    >
       <div className="w-[600px]">
         <div className="flex items-center bg-white shadow-2xl border-b border-gray-300 p-4 dark:bg-[rgb(22,37,54)] dark:border-black">
           {item.isCompleted ? (

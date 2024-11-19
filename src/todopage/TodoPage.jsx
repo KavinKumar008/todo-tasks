@@ -103,14 +103,14 @@ const TodoPage = () => {
         <section
           style={
             theme
-              ? { backgroundImage: `url(${mountain})`, padding: "5rem" }
-              : { backgroundImage: `url(${pillar})`, padding: "5rem" }
+              ? { backgroundImage: `url(${mountain})` }
+              : { backgroundImage: `url(${pillar})` }
           }
           className="w-full h-1/2 bg-no-repeat flex justify-center items-center"
         >
-          <div className="w-[600px]">
+          <div className="w-[600px] max-sm:px-4">
             <div className="flex justify-between">
-              <h1 className="text-5xl text-white">T O D O</h1>
+              <h1 className="text-5xl text-white ">T O D O</h1>
               {theme ? (
                 <CiLight
                   className="text-white text-4xl"
@@ -163,8 +163,8 @@ const TodoPage = () => {
           </div>
         ))}
         {footerDisplay ? (
-          <div className="flex justify-center items-center">
-            <div className="w-[600px] flex justify-between bg-white shadow-2xl p-4 border-t border-gray-400 text-white dark:bg-[rgb(22,37,54)]  dark:border-black">
+          <div className="flex justify-center items-center flex-col bg-[rgb(223,227,232)] px-2 dark:bg-black">
+            <div className="w-[600px] flex justify-between bg-white shadow-2xl p-4 border-t border-gray-400 text-white dark:bg-[rgb(22,37,54)]  dark:border-black max-sm:hidden ">
               <p className="text-gray-500 font-medium">
                 {
                   displayTasks.filter((item) => item.isCompleted === false)
@@ -206,6 +206,53 @@ const TodoPage = () => {
               >
                 Clear Completely
               </p>
+            </div>
+            <div className="hidden max-sm:block bg-white dark:bg-[rgb(22,37,54)]">
+              <div className="flex justify-around p-4 w-[360px] border-b rounded-md">
+                <p className="text-gray-500 font-medium">
+                  {
+                    displayTasks.filter((item) => item.isCompleted === false)
+                      .length
+                  }{" "}
+                  items left
+                </p>
+                <p
+                  className="cursor-pointer text-gray-500 font-medium"
+                  onClick={allDataDelete}
+                >
+                  Clear Completely
+                </p>
+              </div>
+            </div>
+            <div className="hidden max-sm:block justify-around border-t border-gray-400 p-4 bg-white w-[360px] mt-5 mb-5 rounded-md dark:bg-[rgb(22,37,54)]">
+              <div className="flex justify-around">
+                <p
+                  className={`cursor-pointer ${
+                    textColor === "all" ? "text-blue-200" : "text-gray-500"
+                  }  font-medium`}
+                  onClick={handleAll}
+                >
+                  All
+                </p>
+                <p
+                  className={`cursor-pointer  ${
+                    textColor === "active" ? "text-blue-200" : "text-gray-500"
+                  }    font-medium`}
+                  onClick={handleActive}
+                >
+                  Active
+                </p>
+                <p
+                  className={`cursor-pointer  ${
+                    textColor === "completed"
+                      ? "text-blue-200"
+                      : "text-gray-500"
+                  }    font-medium`}
+                  onClick={handleCompleted}
+                >
+                  Completed
+                </p>
+              </div>
             </div>
           </div>
         ) : (
