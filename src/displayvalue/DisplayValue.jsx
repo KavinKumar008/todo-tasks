@@ -14,8 +14,9 @@ const DisplayValue = ({ item, ind, deleteValue, handleAll, handleActive }) => {
     setHide(!hide);
     hide ? (item.isCompleted = false) : (item.isCompleted = true);
     handleAll(item);
+    console.log(item);
   };
-  console.log(item);
+  // console.log(item);
 
   return (
     <main
